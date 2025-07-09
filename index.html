@@ -13,6 +13,17 @@
 </head>
 
 <style>
+    
+    :root {
+            --primary: #189941;
+            --primary-dark: #10772f;
+            --primary-light: #e6f7ec;
+            --gray: #777777;
+            --gray-light: #f8f8f8;
+            --transition: all 0.3s ease;
+            --shadow-sm: 2px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
     *{
         margin: 0;
         padding: 0;
@@ -23,11 +34,11 @@
     body{
         background: #ebfff9;
         font-family: 'Poppins', sans-serif;
+        overflow-x: hidden;
     }
 
     #hero{
         height: 100vh;
-        overflow-x: hidden;
     }
 
     .active{
@@ -51,23 +62,57 @@
         opacity: 0;
         animation-delay: 0.2s;
         box-shadow: 0 0 14px rgba(0, 0, 0, 0.2);
+        position: sticky;
+        top: 0;
+        z-index: 101;
 
+    }
+
+    header img{
+        animation: seesaw 4s ease-in-out infinite;
+        transition: var(--transition);
+    }
+
+    header img:hover{
+        transform: scale(1.03);
+        cursor: pointer;
     }
 
     header nav {
         display: flex;
         flex: 1;
         align-items: center;
+        justify-content: center;
         gap: 40px;
         padding: 0;
         margin: 0;
     }
 
     header nav a {
-        color: Black;
+        color: black;
         opacity: 0.7;
         font-size: 15px;
+        position: relative;
+        text-decoration: none;
     }
+
+    header nav a::before {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        transform-origin: center;
+        height: 2px;
+        width: 100%;
+        background-color: #189941;
+        transition: transform 0.3s ease;
+    }
+
+    header nav a:hover::before {
+        transform: translateX(-50%) scaleX(1); 
+    }
+
 
     header button{
         background-color: #28c796;
@@ -75,11 +120,17 @@
         outline: none;
         padding: 12px 22px;
         border-radius: 10px;
+        transition: var(--transition);
+        box-shadow: var(--shadow-sm);
     }
 
     header button a {
         color: whitesmoke;
         font-size: 17px;
+    }
+
+    header button:hover{
+        transform: translateY(-3px) scale(1.04);
     }
 
     .container{
@@ -89,8 +140,16 @@
         margin-top: 30px;
     }
 
+    .img-wrap{
+        transition: var(--transition);
+    }
+
+    .img-wrap:hover{
+        transform: scale(1.02);
+    }
+
     .portfolio-img{
-        width: 87%;
+        width: 89%;
         margin-top: 8px;
         margin-left: 5px;
         animation: imgIn 0.5s ease-in-out forwards;
@@ -146,7 +205,7 @@
 
     .main-primary-button{
         display: flex;
-        gap: 20px;
+        gap: 40px;
         margin-top: 20px;
         animation: bottomIn 0.5s ease-in-out forwards;
         opacity: 0;
@@ -160,8 +219,10 @@
         border-radius: 12px;
         font-size: 22px;
         background-color: #28C796;
+        box-shadow: var(--shadow-sm);
         color: whitesmoke;
         margin-bottom: 25px;
+        transition: var(--transition);
     }
     .main-primary-button .btn2{
         background-color: transparent;
@@ -169,10 +230,18 @@
         color: #28C796;
     }
 
+    .main-primary-button button:hover{
+        transform: translateY(-2px) scale(1.04);
+    }
+
     .social-icons{
         display: flex;
         gap: 20px;
         align-items: center;
+        animation: bottomIn 0.5s ease-in-out forwards;
+        opacity: 0;
+        animation-delay: 0.6s;
+        transition: all 0.3s ease, opacity 0.3s ease;
     }
 
     .social-icons i{
@@ -187,10 +256,29 @@
         padding: 20px;
         border-radius: 25px;
         color: rgba(43, 58, 85, 0.9);
-        animation: bottomIn 0.5s ease-in-out forwards;
-        opacity: 0;
-        animation-delay: 0.6s;
+        transition: var(--transition);
     }
+
+    .social-icons i:hover{
+        transform: scale(1.04);
+        transform: translateY(-3px);
+        border:1px solid #10772f ;
+        color: var(--primary-dark);
+    }
+
+    footer{
+        background-color: white; 
+        padding: 60px 80px 30px; 
+        margin-top:15px; 
+        box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+        transition: var(--transition); 
+    }
+
+    footer a:hover {
+        color: var(--primary-dark) !important;
+        transform: scale(1.04) translateY(-3px);
+    }
+
 
     @keyframes bottomIn{
         from{
@@ -222,6 +310,15 @@
         }
     }
 
+    @keyframes seesaw {
+        25% {
+            transform: rotate(2deg); /* tilt to right */
+        }
+        75% {
+            transform: rotate(-2deg); /* tilt to left */
+        }
+    }
+
     @media screen and (max-width: 550px) {
         header {
             flex-direction: row;
@@ -229,9 +326,6 @@
             justify-content: space-between;
             padding: 20px 20px;
             gap: 15px;
-            position: sticky;
-            top: 0;
-            z-index: 99;
             box-shadow: 0 0 14px rgba(0, 0, 0, 0.2);
         }
 
@@ -361,13 +455,23 @@
             letter-spacing: 7px;
         }
     }
-
-    footer{
-        width: 100%;
-        height: 100px;
-        background-color: black;
-        margin-top: -6px;
+    
+    @media (max-width: 768px) {
+        footer {
+            padding: 40px 20px !important;
+            text-align: center;
+        }
+        
+        footer > div {
+            grid-template-columns: 1fr !important;
+            gap: 30px !important;
+        }
+        
+        .accounts, .quick-links, .services, .contact-info {
+            align-items: center !important;
+        }
     }
+
 </style>
 
 <body>
@@ -380,7 +484,7 @@
                 <a href="" class="active">Home</a>
                 <a href="">Blogs</a>
                 <a href="">Contact</a>
-                <a href="">Download Resume</a>
+                <a href="Harris-Angkua-Resume.pdf" download="Harris_Angkua_Resume">Download Resume</a>
             </nav>
              <button><a href="#">Skills & Projects</a></button>
              
@@ -410,11 +514,65 @@
                 </div>
             </div>
         </div>
-
-        <footer>
-
-        </footer>
     </section>
+
+    <footer>
+        <div style="display: grid; z-index:100; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto;">
+
+            <div class="accounts" style="display: flex; flex-direction: column; gap: 20px;">
+                <img src="portfolio-logo.png" alt="Karris" width="150px" height="auto" style="animation: seesaw 4s ease-in-out infinite;">
+                <p style="color: var(--gray); line-height: 1.6;">Building digital experiences that matter. Passionate about creating solutions through code.</p>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#" style="color: var(--primary); font-size: 20px;"><i class="fab fa-github"></i></a>
+                    <a href="#" style="color: var(--primary); font-size: 20px;"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" style="color: var(--primary); font-size: 20px;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: var(--primary); font-size: 20px;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: var(--primary); font-size: 20px;"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+            
+            <div class="quick-links" style="display: flex; align-items:center; flex-direction: column; gap: 15px;">
+                <h3 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 10px;">Quick Links</h3>
+                <a href="#" style="color: var(--gray); transition: var(--transition);">Home</a>
+                <a href="#" style="color: var(--gray); transition: var(--transition);">About</a>
+                <a href="#" style="color: var(--gray); transition: var(--transition);">Projects</a>
+                <a href="#" style="color: var(--gray); transition: var(--transition);">Blog</a>
+                <a href="#" style="color: var(--gray); transition: var(--transition);">Contact</a>
+            </div>
+            
+            <div class="services" style="display: flex; align-items:center; flex-direction: column; gap: 15px;">
+                <h3 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 10px;">Services</h3>
+                <a href="#" style="color: var(--gray); transition: var(--transition);">Web Development</a>
+                <a href="#" style="color: var(--gray); transition: var(--transition);">Video Editing</a>
+                <a href="#" style="color: var(--gray); transition: var(--transition);">Documentation Services</a>
+                <a href="#" style="color: var(--gray); transition: var(--transition);">Technical Writing</a>
+            </div>
+            
+
+            <div class="contact-info" style="display: flex; align-items:center; flex-direction: column; gap: 15px;">
+                <h3 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 10px;">Contact Info</h3>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-envelope" style="color: var(--primary);"></i>
+                    <span style="color: var(--gray);">harrisangkua22@gmail.com</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-phone-alt" style="color: var(--primary);"></i>
+                    <span style="color: var(--gray);">09560513963</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--primary);"></i>
+                    <span style="color: var(--gray);">Quiapo, Manila, Philippines</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="border-top: 1px solid #e0e0e0; margin-top: 50px; padding-top: 20px; text-align: center;">
+            <p style="color: var(--gray); font-size: 0.9rem;">
+                &copy; 2025 Harris Angkua. All rights reserved. 
+            </p>
+        </div>
+    </footer>
+
 </body>
 
     <script>
@@ -425,7 +583,12 @@
             nav.classList.toggle('active');
             container.classList.toggle('push-down');
         }
+
+        document.querySelector('a[download]').addEventListener('click', function(e) {
+            if (!confirm('Download resume?')) {
+            e.preventDefault();
+            }
+        });
     </script>
-
-
+    
 </html>
